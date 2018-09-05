@@ -46,6 +46,7 @@ class BooksApp extends React.Component {
             </div>
           </div>
         )}/>
+        <Route exact path="/search" component={SearchPage}/>
       </div>
     )
   }
