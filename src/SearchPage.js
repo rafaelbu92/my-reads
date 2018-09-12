@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import App from './App.js'
-import * as BooksAPI from './BooksAPI.js'
-import  ShelfChanger  from './ShelfChanger.js'
+import App from './App'
+import * as BooksAPI from './BooksAPI'
 import escapeRegExp from 'escape-string-regexp'
 import Book from './Book'
 
@@ -16,7 +15,7 @@ class SearchPage extends Component {
     this.updateQuery("")
   }
 
-    updateQuery = (query) => {
+  updateQuery = (query) => {
       if(query){
           BooksAPI.search(query)
             .then((books) => {
@@ -28,13 +27,10 @@ class SearchPage extends Component {
               }
             });
         }
-      else{
-        BooksAPI.getAll().then(books => this.setState({books}))
-      }
     }
 
   render() {
-  const { books} = this.state
+  const { books } = this.state
 
   return (
   <div>

@@ -20,11 +20,21 @@ export const get = (bookId) =>
 export const getAll = () =>
   fetch(`${api}/books`, { headers })
     .then(res => res.json())
-    .then(data => data.books)
+    .then(({ books }) => {
+      let list = {}
+      books.forEach(book => {
+        if (list[book.shelf]) {
+          list[book.shelf].push(book)
+        } else {
+          list[book.shelf] = [].concat(book)
+        }
+      })
+      return list
+    })
     .catch(error => console.log("Fail to connect", error))
 
-export const update = (book, shelf) =>
-  fetch(`${api}/books/${book.id}`, {
+export const update = (bookId, shelf) =>
+  fetch(`${api}/books/${bookId}`, {
     method: 'PUT',
     headers: {
       ...headers,
