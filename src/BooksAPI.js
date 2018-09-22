@@ -52,4 +52,15 @@ export const search = (query) =>
     },
     body: JSON.stringify({ query })
   }).then(res => res.json())
-    .then(data => data.books)
+    .then(({ books }) => {
+      let list = {}
+      books.forEach(book => {
+        if (list[book.shelf]) {
+          list[book.shelf].push(book)
+        } else {
+          list[book.shelf] = [].concat(book)
+        }
+      })
+      return list
+    })
+    .catch(error => console.log("Fail to connect", error))

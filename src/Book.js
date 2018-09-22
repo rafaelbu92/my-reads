@@ -1,57 +1,57 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import * as BooksAPI from './BooksAPI'
 
 
-class Book extends React.Component {
+class Book extends Component {
 
-  updateShelf = (book="", shelf="") => {
-    BooksAPI.update(book, shelf).then(() => this.props.getAll());
+  constructor(props){
+    super(props)
+    this.state = {
+      shelf:""
+    }
   }
 
   render() {
 
-    const { books, categories } = this.props
+    const { book } = this.props
+    const { shelf } = this.state
 
-
+    console.log(shelf)
     return (
-      <Fragment>
-        { Object.entries(books).map(([shelf, books]) => (
-          <div className="bookshelf" key={ shelf }>
-            <h2 className="bookshelf-title">{categories[shelf]}</h2>
-            <div className="bookshelf-books">
-              <ol className="books-grid">
-                  { books.map(book => (
-                    <li key={book.id}>
-                      <div className="book">
-                        <div className="book-top">
-                        <div className='book-cover'
-                          style={{ width: 128, height: 180, backgroundImage: `url(${(book.imageLinks) ? book.imageLinks.thumbnail : ""})`}}>
-                        </div>
-                        <div className="book-shelf-changer">
-                          <select onChange={(event) => this.updateShelf(book.id, event.target.value)}>
-                            <option value="move">Move to...</option>
-                            <option value="currentlyReading">Currently Reading</option>
-                            <option value="wantToRead">Want to Read</option>
-                            <option value="read">Read</option>
-                            <option value="none">None</option>
-                          </select>
-                        </div>
-                        </div>
-                        <div className='book-title'>
-                          <p>{book.title}</p>
-                        </div>
-                        <div className='book-authors'>
-                          <p>{book.authors}</p>
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-              </ol>
-            </div>
+        <div className="book">
+              <div className="book-top">
+                <div className='book-cover'
+                    style={{ width: 128, height: 180, backgroundImage: `url(${(book.imageLinks) ? book.imageLinks.thumbnail : ""})`}}>
+                </div>
+                <div className="book-shelf-changer">
+                    <select onChange={(event) => this.updateShelfGetAll(book.id, event.target.value)}>
+                        <option value="move" disabled>Move to...</option>
+                        <option value="wantToRead" >Want to Read</option>
+                        <option value="wantToRead" >Want to Read</option>
+                        <option value="currentlyReading" >Currently Reading</option>
+                        <option value="read" >Read</option>
+                        <option value="none" >None</option>
+                    </select>
+                </div>
+              </div>
+              <div className='book-title'>
+                  <p>{book.title}</p>
+              </div>
+              <div className='book-authors'>
+                  <p>{book.authors}</p>
+              </div>
           </div>
-        ))}
-      </Fragment>
-    )
+        );
+  }
+
+  updateShelfGetAll = (book="", shelf="") => {
+      console.log("primeiro")
+      console.log(this.state.shelf)
+      this.setState({shelf})
+      console.log("segundo")
+      console.log(this.state.shelf)
+      BooksAPI.update(book, shelf).then(() => this.props.getAll());
   }
 }
+
 export default Book

@@ -1,38 +1,35 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import App from './App'
 import * as BooksAPI from './BooksAPI'
-import escapeRegExp from 'escape-string-regexp'
-import Book from './Book'
+import BookSearchList from './BookSearchList'
 
 class SearchPage extends Component {
 
-  state = {
-      books: [],
-  }
-
-  componentDidMount = () => {
-    this.updateQuery("")
+  constructor(props){
+    super(props)
+    this.state ={
+      books:[]
+    }
   }
 
   updateQuery = (query) => {
       if(query){
           BooksAPI.search(query)
             .then((books) => {
-              if(books instanceof Array)  {
-                  this.setState({books})
-              }
-              else {
-                  this.setState({books: []})
+              if(books instanceof Object){
+                this.setState({books})
+              }else{
+                this.setState({books: []})
               }
             });
         }
     }
 
   render() {
-  const { books } = this.state
 
+  const { books } = this.state
   return (
+
   <div>
     <Link to="/search" className='search-book'>Search Page</Link>
         <div className="search-books-bar">
@@ -50,27 +47,21 @@ class SearchPage extends Component {
                   </div>
                 </form>
         </div>
-      {books.length!==0 && (
-          <div className="search-books-results">
-              <div className="search-books">
-                  <ol className="books-grid">
-                      {books.map((book) =>(
-                          <li key={book.id} className='books-list'>
-                              <Book book={book}/>
-                          </li>
-                        ))}
-                    </ol>
-                </div>
+        <div className="search-books-results">
+            <div className="search-books">
+              <BookSearchList books={books} search={this.search} getAll = {this.props.getAll}/>
             </div>
-            )}
-            {(books.length===0) && (
-                    <div className="search-results">
-                          {`No book found`}
-                    </div>
-                  )}
-              </div>
-          )
-      }
-  }
+        </div>
+  </div>
+
+        )
+    }
+
+    search = () => {
+      BooksAPI.search().then((books) => {
+          this.setState({books})
+      })
+    }
+}
 
 export default SearchPage
