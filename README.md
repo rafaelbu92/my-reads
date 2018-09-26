@@ -21,16 +21,22 @@ To get started developing right away:
 │   ├── favicon.ico # React Icon, You may change if you wish.
 │   └── index.html # DO NOT MODIFY
 └── src
-    ├── App.css # Styles for your app. Feel free to customize this as you desire.
-    ├── App.js # This is the root of your app. Contains static HTML right now.
-    ├── App.test.js # Used for testing. Provided with Create React App. Testing is encouraged, but not required.
-    ├── BooksAPI.js # A JavaScript API for the provided Udacity backend. Instructions for the methods are below.
-    ├── icons # Helpful images for your app. Use at your discretion.
-    │   ├── add.svg
-    │   ├── arrow-back.svg
-    │   └── arrow-drop-down.svg
-    ├── index.css # Global styles. You probably won't need to change anything here.
-    └── index.js # You should not need to modify this file. It is used for DOM rendering only.
+    ├── index.js # BrowserRouter calling App.js.
+    ├── sources
+        ├── BooksApi.js # responsible to bring data from backend.
+    ├── pages
+        ├── BookMainList.js # main page called by App.js which shows the shelfs and each book.
+        ├── BookSearchList.js # page called by SearchPage.js to list the books found by search typing.
+        ├── SearchPage.js # page called by App.js when selected the search button.
+    ├── css
+        ├── app.css # css responsible to render book's design.
+        ├── index.css # css responsible to render page's design.
+    ├── components
+        ├── Book.js # component responsible to render book's design (title, author and cover).
+    ├── icons
+        ├── add.svg # icon used at the add's button.
+        ├── arrow-back.svg # icon used in search input line to go back to the previous page.
+        ├── arrow-drop-down.svg # icon used to appear within book's design for book's dropdown selection shelfs.
 ```
 
 Remember that good React design practice is to create new JS files for each component and use import/require statements to include them where they are needed.
