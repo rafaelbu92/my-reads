@@ -33,6 +33,8 @@ To get started developing right away:
         ├── index.css # css responsible to render page's design.
     ├── components
         ├── Book.js # component responsible to render book's design (title, author and cover).
+    ├── main
+        ├── App.js # the main application component used to initiate the app.
     ├── icons
         ├── add.svg # icon used at the add's button.
         ├── arrow-back.svg # icon used in search input line to go back to the previous page.
